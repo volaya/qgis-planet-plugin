@@ -167,7 +167,11 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="txtOrderName"/>
+               <widget class="QLineEdit" name="txtOrderName">
+                <property name="maxLength">
+                 <number>200</number>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -237,8 +241,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>895</width>
-                 <height>726</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
               </widget>
@@ -304,8 +308,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>895</width>
-                 <height>726</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
               </widget>
