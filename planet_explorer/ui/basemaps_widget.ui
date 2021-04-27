@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>457</width>
+    <width>421</width>
     <height>559</height>
    </rect>
   </property>
@@ -95,10 +95,21 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
            <property name="styleSheet">
             <string notr="true">QToolButton:disabled{ 
-color: rgb(17, 141, 148);
+background-color: rgb(17, 141, 148);
+color: rgb(255,255,255);
 font-weight: bold;
+border: none
 }
 </string>
            </property>
@@ -109,9 +120,22 @@ font-weight: bold;
             <bool>true</bool>
            </property>
            <property name="autoRaise">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item>
           <widget class="QToolButton" name="btnSeries">
@@ -124,10 +148,21 @@ font-weight: bold;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
            <property name="styleSheet">
             <string notr="true">QToolButton:disabled{ 
-color: rgb(17, 141, 148);
+background-color: rgb(17, 141, 148);
+color: rgb(255,255,255);
 font-weight: bold;
+border: none
 }
 </string>
            </property>
@@ -138,9 +173,22 @@ font-weight: bold;
             <bool>true</bool>
            </property>
            <property name="autoRaise">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_16">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item>
           <widget class="QToolButton" name="btnAll">
@@ -150,10 +198,21 @@ font-weight: bold;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
            <property name="styleSheet">
             <string notr="true">QToolButton:disabled{ 
-color: rgb(17, 141, 148);
+background-color: rgb(17, 141, 148);
+color: rgb(255,255,255);
 font-weight: bold;
+border: none
 }
 </string>
            </property>
@@ -164,7 +223,7 @@ font-weight: bold;
             <bool>true</bool>
            </property>
            <property name="autoRaise">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
