@@ -26,6 +26,7 @@ import logging
 import json
 
 from collections import OrderedDict, defaultdict
+from functools import partial
 
 import analytics
 
@@ -209,8 +210,11 @@ class PlanetOrderBundleWidget(QFrame):
     def selected(self):
         return self.chkSelected.isChecked()
 
-    def setSelected(self, selected):
+    def setSelected(self, selected, emit=False):
+        if not emit:
+            self.blockSignals(True)
         self.chkSelected.setChecked(selected)
+        self.blockSignals(False)
 
     def filetype(self):
         if self.radioTiff.isChecked():
@@ -300,11 +304,11 @@ class PlanetOrderItemTypeWidget(QWidget):
             if bundle["rectification"] == "orthorectified":
                 name = bundle["name"]
                 description = bundle["description"]
-                udm = "udm2" in bundle["auxiliaryFiles"]
+                udm = "udm2" in bundle.get("auxiliaryFiles", [])
                 w = PlanetOrderBundleWidget(bundleid, name, description, udm)
                 gridlayout.addWidget(w, i // 2, i % 2)
                 w.setSelected(i == 0)
-                w.selectionChanged.connect(lambda: self.selectionChanged.emit())
+                w.selectionChanged.connect(partial(self._bundle_selection_changed, w))
                 self.bundleWidgets.append(w)
                 i += 1
 
@@ -327,7 +331,7 @@ class PlanetOrderItemTypeWidget(QWidget):
                 udm = "udm2" in bundle["auxiliaryFiles"]
                 w = PlanetOrderBundleWidget(bundleid, name, description, udm)
                 gridlayoutUnrect.addWidget(w, i // 2, i % 2)
-                w.selectionChanged.connect(lambda: self.selectionChanged.emit())
+                w.selectionChanged.connect(partial(self._bundle_selection_changed, w))
                 self.bundleWidgets.append(w)
                 i += 1
 
@@ -343,6 +347,12 @@ class PlanetOrderItemTypeWidget(QWidget):
         self.widgetUnrectified.hide()
         self.labelUnrectified.hide()
         self.widgetDetails.setLayout(layout)
+
+    def _bundle_selection_changed(self, widget):
+        for w in self.bundleWidgets:
+            if widget != w:
+                w.setSelected(False, False)
+        self.selectionChanged.emit()
 
     def _showMoreClicked(self):
         visible = self.widgetUnrectified.isVisible()
@@ -695,6 +705,12 @@ class PlanetOrdersDialog(ORDERS_BASE, ORDERS_WIDGET):
 
     @waitcursor
     def _process_orders(self):
+        allbundles = []
+        for widget in self._item_type_widgets.values():
+            allbundles.extend(widget.bundles())
+        if not allbundles:
+            self.bar.pushMessage("", "No bundles have been selected", Qgis.Warning)
+            return
         name = self.txtOrderName.text()
 
         orders = []
