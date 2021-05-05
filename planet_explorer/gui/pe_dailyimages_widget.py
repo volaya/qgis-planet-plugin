@@ -304,10 +304,8 @@ class DailyImagesWidget(BASE, WIDGET):
         else:
             tool_resources['aoi'] = None
 
-        thumbnails = self.searchResultsWidget.selected_thumbnails()
         dlg = PlanetOrdersDialog(
             images,
-            thumbnails,
             tool_resources=tool_resources
         )
 
@@ -319,7 +317,7 @@ class DailyImagesWidget(BASE, WIDGET):
     @pyqtSlot()
     def copy_checked_ids(self):
         if not self._checked_queue_set:
-            self.parent.show_message(f'No checked IDs to copy',
+            self.parent.show_message('No checked IDs to copy',
                               level=Qgis.Warning,
                               duration=10)
             return
