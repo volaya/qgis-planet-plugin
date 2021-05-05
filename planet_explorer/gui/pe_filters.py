@@ -274,6 +274,8 @@ class PlanetMainFilters(MAIN_FILTERS_BASE, MAIN_FILTERS_WIDGET,
         if idx == 0:
             return
         request = self.comboSavedSearch.currentData()
+        if request is None:
+            return
         sources = request['item_types']
         if 'PSScene3Band' in sources or 'PSScene4Band' in sources:
             item_types = ["PSScene" if typ in ["PSScene3Band", "PSScene4Band"]
