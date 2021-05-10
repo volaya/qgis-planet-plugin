@@ -337,7 +337,7 @@ class PlanetOrderItemTypeWidget(QWidget):
             if bundle["rectification"] != "orthorectified":
                 name = bundle["name"]
                 description = bundle["description"]
-                udm = "udm2" in bundle["auxiliaryFiles"]
+                udm = "udm2" in bundle.get("auxiliaryFiles", [])
                 w = PlanetOrderBundleWidget(bundleid, name, description, udm)
                 gridlayoutUnrect.addWidget(w, i // 2, i % 2)
                 w.selectionChanged.connect(partial(self._bundle_selection_changed, w))
