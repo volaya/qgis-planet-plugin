@@ -319,8 +319,9 @@ class BasemapLayerWidget(QWidget):
             # if there are no multiple mosaics, we use the original url,
             # and just add 'proc' and 'color' modifiers to it
             layerurl = layer.source().split("&url=")[-1]
-            tokens = layerurl.split("?")
-            self.layerurl = f"{tokens[0]}?{quote(tokens[1])}"
+            url, params = layerurl.split("?")
+            paramstring = "".join([p for p in params if p.startswith(("&proc", "&color", "&zmin", "&zmax"))])
+            self.layerurl = f"{url}?{quote(paramstring)}"
         self.renderingOptionsWidget.set_process(proc)
         self.renderingOptionsWidget.set_ramp(ramp)
         self.renderingOptionsWidget.values_changed.connect(self.change_source)
