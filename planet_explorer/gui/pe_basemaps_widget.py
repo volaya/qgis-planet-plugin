@@ -408,17 +408,27 @@ class BasemapsWidget(BASE, WIDGET):
         selected = self.mosaicsList.selected_mosaics()
         if selected:
             if self.btnOneOff.isChecked() and len(selected) > 1:
-                self.parent.show_message(f'Only one single serie can be selected in "one off" mode.',
+                self.parent.show_message('Only one single serie can be selected in "one off" mode.',
                               level=Qgis.Warning,
                               duration=10)
                 return False
             else:
                 return True
         else:
-            self.parent.show_message(f'No checked items to order',
+            self.parent.show_message('No checked items to order',
                               level=Qgis.Warning,
                               duration=10)
             return False
+
+    def _check_can_download_quads_from_selected(self):
+        selected = self.mosaicsList.selected_mosaics()
+        can_download = all(mosaic['quad_download'] for mosaic in selected)
+        if not can_download:
+            self.parent.show_message('Not all selected basemaps are available for download.',
+                                     level=Qgis.Warning,
+                                     duration=10)
+        return can_download
+
 
     def explore(self):
         if self._check_has_items_checked():
@@ -434,7 +444,7 @@ class BasemapsWidget(BASE, WIDGET):
                     self.comboSeriesName.currentText() or selected[0][NAME])
 
     def order(self):
-        if self._check_has_items_checked():
+        if self._check_has_items_checked() and self._check_can_download_quads_from_selected():
             self.stackedWidget.setCurrentWidget(self.orderMethodPage)
 
     def next_order_method_page_clicked(self):
