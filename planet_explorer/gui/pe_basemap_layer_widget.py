@@ -346,7 +346,7 @@ class BasemapLayerWidget(QWidget):
             self.labelId.setVisible(has_api_key)
             self.labelName.setVisible(has_api_key)
             self.slider.setVisible(has_api_key)
-            value = self.slider.value() if len(self.mosaics) > 1 else 0
+            value = self.slider.value()
             name, mosaicid = self.mosaics[value]
             tile_url = TILE_URL_TEMPLATE % (mosaicid, str(PlanetClient.getInstance().api_key()))
             self.layer.setCustomProperty(PLANET_CURRENT_MOSAIC, name)
@@ -365,7 +365,6 @@ class BasemapLayerWidget(QWidget):
                 zoom.append(token)
         szoom = f"&{'&'.join(zoom)}" if zoom else ""
         uri = f"type=xyz&url={tile_url}{procparam}{rampparam}{szoom}"
-        print(uri)
         provider = self.layer.dataProvider()
         if provider is not None:
             provider.setDataSourceUri(uri)
@@ -375,7 +374,6 @@ class BasemapLayerWidget(QWidget):
         self.ensure_correct_size()
 
     def login_changed(self):
-        client = PlanetClient.getInstance()
         if not bool(self.datatype):
             mosaic = mosaic_name_from_url(self.layer.source())
             datatype = datatype_from_mosaic_name(mosaic)
